@@ -1,0 +1,17 @@
+{
+  "name": "Chatly",
+  "short_name": "Chatly",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#202127",
+  "theme_color": "#202127",
+  "description": "Chat with your community",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

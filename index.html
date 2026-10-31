@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#202127">
+<meta name="description" content="Chatly — chat with your community.">
+<title>Chatly</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{color-scheme:dark;--bg:#202127;--panel:#2b2d35;--panel2:#31333d;--line:#3d404b;--text:#f2f3f5;--muted:#a6a9b4;--accent:#5865f2;--green:#3ba55c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif;height:100dvh}button,input,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:8px;padding:10px 13px;background:var(--accent);color:white;font-weight:650}button:disabled{opacity:.5;cursor:not-allowed}input,textarea{background:#1c1d23;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:11px;outline:none;width:100%}input:focus,textarea:focus{border-color:var(--accent)}.hidden{display:none!important}.muted{color:var(--muted)}.small{font-size:12px}.auth-wrap{min-height:100dvh;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at top,#34375c 0,transparent 55%),var(--bg)}.auth-card{width:min(420px,100%);background:var(--panel);padding:28px;border-radius:16px;box-shadow:0 18px 70px #0006}.brand{font-size:29px;font-weight:850;letter-spacing:-1px}.brand span{color:#8992ff}.auth-card h1{margin:8px 0 4px}.stack{display:grid;gap:12px}.auth-card button{width:100%}.auth-foot{text-align:center;margin-top:16px}.app{height:100dvh;display:grid;grid-template-columns:68px 230px minmax(0,1fr)}.servers{background:#191a20;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:10px;overflow:auto}.server-icon{width:46px;height:46px;border-radius:16px;background:var(--panel2);display:grid;place-items:center;font-weight:800;color:#fff;cursor:pointer;flex:none}.server-icon.active,.server-icon:hover{background:var(--accent);border-radius:13px}.server-icon.add{font-size:24px;color:#8ee0a4}.sidebar{background:var(--panel);display:flex;flex-direction:column;min-width:0}.side-head{padding:17px 15px;border-bottom:1px solid var(--line);font-weight:800;display:flex;justify-content:space-between;align-items:center}.side-section{padding:16px 10px 5px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.08em}.side-item{margin:2px 8px;padding:9px 10px;border-radius:7px;color:#c4c6ce;cursor:pointer;display:flex;gap:8px;align-items:center;overflow:hidden}.side-item:hover,.side-item.active{background:#414351;color:white}.side-item .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sidebar-bottom{margin-top:auto;background:#23242c;padding:11px;display:flex;align-items:center;gap:9px}.avatar{width:34px;height:34px;border-radius:50%;background:#5865f2;display:grid;place-items:center;font-weight:800;flex:none}.main{display:flex;flex-direction:column;min-width:0;background:#30313a}.topbar{height:58px;border-bottom:1px solid #24252c;display:flex;align-items:center;padding:0 18px;gap:10px;font-weight:750}.topbar .right{margin-left:auto}.chat{flex:1;overflow:auto;padding:18px 22px}.welcome{height:100%;display:grid;place-items:center;text-align:center;color:var(--muted)}.msg{display:flex;gap:12px;margin:0 0 19px}.msg .avatar{width:38px;height:38px}.msg-head{display:flex;align-items:baseline;gap:9px;margin-bottom:4px}.msg-user{font-weight:750}.msg-time{font-size:11px;color:var(--muted)}.msg-text{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45}.msg-image{max-width:min(420px,100%);max-height:330px;display:block;border-radius:10px;margin-top:8px}.composer-wrap{padding:0 20px 18px}.composer{background:#383a45;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px}.composer input{border:0;background:transparent;flex:1;min-width:0}.icon-btn{background:transparent;color:#b8bbc6;padding:8px;font-size:19px}.icon-btn:hover{color:white}.user-panel{display:flex;gap:7px;align-items:center}.user-panel button{background:transparent;color:var(--muted);padding:5px}.notice{padding:10px 12px;border-radius:8px;background:#473c25;color:#ffdb8a;margin:12px 0;font-size:13px}.modal-back{position:fixed;inset:0;background:#0009;display:grid;place-items:center;padding:16px;z-index:5}.modal{background:var(--panel);width:min(440px,100%);padding:22px;border-radius:14px;display:grid;gap:13px;box-shadow:0 15px 60px #0008}.modal h2{margin:0}.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}.secondary{background:#444653}.danger{background:#a83e4b}.file-label{cursor:pointer;color:#b9bdca;padding:8px;font-size:20px}.mobile-menu{display:none}
+@media(max-width:700px){.app{grid-template-columns:56px minmax(0,1fr)}.sidebar{position:fixed;z-index:3;left:56px;top:0;bottom:0;width:min(260px,75vw);box-shadow:8px 0 30px #0005;transform:translateX(-110%);transition:transform .2s}.sidebar.open{transform:translateX(0)}.mobile-menu{display:inline-block}.chat{padding:14px}.composer-wrap{padding:0 10px 12px}.topbar{padding:0 12px}}
+</style>
+</head>
+<body>
+<div id="auth" class="auth-wrap">
+  <div class="auth-card">
+    <div class="brand">chat<span>ly</span></div>
+    <h1 id="authTitle">Welcome back</h1><p class="muted" id="authSubtitle">Sign in to your community.</p>
+    <form id="authForm" class="stack">
+      <input id="email" type="email" placeholder="Email address" autocomplete="email" required>
+      <input id="username" class="hidden" placeholder="Username (3–24 characters)" minlength="3" maxlength="24" autocomplete="username">
+      <input id="password" type="password" placeholder="Password (at least 6 characters)" minlength="6" autocomplete="current-password" required>
+      <button id="authSubmit">Sign in</button>
+    </form>
+    <div class="auth-foot muted small"><span id="authSwitchText">New to Chatly?</span> <a href="#" id="authSwitch" style="color:#aeb5ff">Create an account</a></div>
+    <p id="authError" class="small" style="color:#ff929c"></p>
+    <p class="small muted">Open registration is enabled. Use an email address you can access.</p>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+  <aside class="servers" id="serverRail">
+    <div class="server-icon active" title="Discover public servers" id="discoverBtn">⌕</div>
+    <div id="serverIcons"></div>
+    <div class="server-icon add" title="Create a server" id="createServerBtn">+</div>
+  </aside>
+  <aside class="sidebar" id="sidebar">
+    <div class="side-head"><span id="sideTitle">Discover</span><button class="icon-btn" id="sideAction" title="Create">＋</button></div>
+    <div id="sideContent" style="overflow:auto;flex:1"></div>
+    <div class="sidebar-bottom">
+      <div class="avatar" id="myAvatar">?</div>
+      <div style="min-width:0;flex:1"><div id="myName" style="font-weight:750;overflow:hidden;text-overflow:ellipsis"></div><div class="small muted">Your account</div></div>
+      <button id="signOut" title="Sign out">↪</button>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><button class="icon-btn mobile-menu" id="mobileMenu">☰</button><span id="roomIcon">#</span><span id="roomTitle">Discover servers</span><span class="right muted small" id="connectionState">Connecting…</span></header>
+    <section class="chat" id="chat"><div class="welcome"><div><div style="font-size:48px">✦</div><h2>Welcome to Chatly</h2><p>Join a server or start a conversation.</p></div></div></section>
+    <div class="composer-wrap hidden" id="composerWrap">
+      <form class="composer" id="messageForm">
+        <label class="file-label" title="Attach an image">＋<input id="imageInput" type="file" accept="image/*" hidden></label>
+        <input id="messageInput" placeholder="Message…" maxlength="4000" autocomplete="off">
+        <button type="submit" style="border-radius:8px;padding:9px 13px">➤</button>
+      </form>
+      <div id="attachmentPreview" class="small muted"></div>
+    </div>
+  </main>
+</div>
+
+<div id="modalRoot"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* SETUP: paste your Supabase Project URL and anon/public key below. Never put a service_role key in this file. */
+const SUPABASE_URL = "https://rfivnjnvliqpehdkqqap.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_ifYAMrdUhuyX-iOZULuP4w_nZx6oQtl";
+const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("PASTE_") && !SUPABASE_ANON_KEY.includes("PASTE_");
+const $ = id => document.getElementById(id);
+let sb, user, profile, mode="login", currentServer=null, currentChannel=null, currentDm=null, selectedImage=null, messagesChannel=null, refreshTimer=null;
+let servers=[], channels=[];
+function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function initials(s="U"){return (s.trim()[0]||"U").toUpperCase();}
+function say(el,msg){$(el).textContent=msg||"";}
+function showAuthError(msg){say("authError",msg);}
+function setMode(next){mode=next;$("authTitle").textContent=mode==="login"?"Welcome back":"Create your account";$("authSubtitle").textContent=mode==="login"?"Sign in to your community.":"Choose a username and join Chatly."; $("username").classList.toggle("hidden",mode==="login");$("username").required=mode==="signup";$("password").autocomplete=mode==="login"?"current-password":"new-password";$("authSubmit").textContent=mode==="login"?"Sign in":"Create account";$("authSwitchText").textContent=mode==="login"?"New to Chatly?":"Already have an account?";$("authSwitch").textContent=mode==="login"?"Create an account":"Sign in";showAuthError("");}
+$("authSwitch").onclick=e=>{e.preventDefault();setMode(mode==="login"?"signup":"login");};
+function modal(title,body){$("modalRoot").innerHTML=`<div class="modal-back" id="modalBack"><div class="modal"><h2>${title}</h2>${body}<button class="secondary" id="modalClose">Cancel</button></div></div>`;$("modalClose").onclick=closeModal;$("modalBack").onclick=e=>{if(e.target.id==="modalBack")closeModal();};}
+function closeModal(){$("modalRoot").innerHTML="";}
+function toast(msg){$("connectionState").textContent=msg;setTimeout(()=>$("connectionState").textContent="Connected",2600);}
+async function start(){
+ if(!configured){$("auth").classList.remove("hidden");showAuthError("Setup needed: add your Supabase Project URL and anon key in index.html, then run the SQL in schema.sql.");return;}
+ sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+ const {data:{session}}=await sb.auth.getSession();
+ if(session) await enter(session.user);
+ sb.auth.onAuthStateChange(async(event,session)=>{if(event==="SIGNED_IN"&&session&&!user) await enter(session.user);if(event==="SIGNED_OUT")location.reload();});
+}
+$("authForm").onsubmit=async e=>{
+ e.preventDefault();showAuthError("");if(!sb){showAuthError("Finish the Supabase setup first.");return;}
+ const email=$("email").value.trim(),password=$("password").value;
+ try{
+  if(mode==="signup"){
+   const username=$("username").value.trim();
+   if(!/^[a-zA-Z0-9_]{3,24}$/.test(username))throw Error("Username must be 3–24 letters, numbers, or underscores.");
+   const {data,error}=await sb.auth.signUp({email,password,options:{data:{username}}});if(error)throw error;
+   if(data.session)await enter(data.user);else showAuthError("Check your email to confirm your account, then sign in.");
+  }else{const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;await enter(data.user);}
+ }catch(err){showAuthError(err.message||"Something went wrong.");}
+};
+async function enter(authUser){
+ user=authUser;
+ const {data:prof,error}=await sb.from("profiles").select("*").eq("id",user.id).maybeSingle();
+ if(error)throw error;
+ if(!prof){await sb.auth.signOut();throw Error("Your profile is not ready yet. Please confirm your email and sign in again.");}
+ profile=prof;$("auth").classList.add("hidden");$("app").classList.remove("hidden");$("myName").textContent=profile.username;$("myAvatar").textContent=initials(profile.username);
+ await loadServers();showDiscover();
+}
+$("signOut").onclick=()=>sb.auth.signOut();
+async function loadServers(){
+ const {data,error}=await sb.from("server_members").select("server_id,servers(id,name,visibility,owner_id,invite_code)").eq("user_id",user.id);
+ if(error)throw error;servers=(data||[]).map(x=>x.servers).filter(Boolean);renderServerIcons();
+}
+function renderServerIcons(){$("serverIcons").innerHTML=servers.map(s=>`<div class="server-icon ${currentServer?.id===s.id?"active":""}" data-server="${s.id}" title="${esc(s.name)}">${esc(initials(s.name))}</div>`).join("");document.querySelectorAll("[data-server]").forEach(el=>el.onclick=()=>openServer(el.dataset.server));}
+function showDiscover(){
+ currentServer=null;currentChannel=null;currentDm=null;renderServerIcons();$("sideTitle").textContent="Discover";$("sideAction").textContent="＋";$("sideContent").innerHTML=`<div class="side-section">PUBLIC SERVERS</div><div id="publicServers" class="muted small" style="padding:12px">Loading…</div><div class="side-section">PRIVATE SERVER</div><div style="padding:8px"><button class="secondary" style="width:100%" id="joinPrivate">Use invite code</button></div>`;
+ $("roomIcon").textContent="✦";$("roomTitle").textContent="Discover servers";$("composerWrap").classList.add("hidden");$("chat").innerHTML='<div class="welcome"><div><div style="font-size:48px">✦</div><h2>Welcome to Chatly</h2><p>Join a public server, or use an invite code for a private one.</p></div></div>';
+ $("sideAction").onclick=()=>createServerModal();$("joinPrivate").onclick=joinPrivateModal;loadPublicServers();
+}
+async function loadPublicServers(){
+ const target=$("publicServers");if(!target)return;
+ const {data,error}=await sb.from("servers").select("id,name,description,owner_id").eq("visibility","public").order("created_at",{ascending:false}).limit(50);
+ if(error){target.textContent=error.message;return;}
+ const joined=new Set(servers.map(s=>s.id));
+ target.innerHTML=data.length?data.map(s=>`<div class="side-item" data-public="${s.id}"><span>🌐</span><span class="name">${esc(s.name)}</span>${joined.has(s.id)?"✓":""}</div>`).join(""):'<p style="padding:10px">No public servers yet. Create one!</p>';
+ target.querySelectorAll("[data-public]").forEach(el=>el.onclick=()=>joinPublic(el.dataset.public));
+}
+async function joinPublic(id){
+ const {error}=await sb.from("server_members").insert({server_id:id,user_id:user.id,role:"member"});if(error&&error.code!=="23505"){alert(error.message);return;}await loadServers();await openServer(id);
+}
+async function openServer(id){
+ currentServer=servers.find(s=>s.id===id);if(!currentServer){await loadServers();currentServer=servers.find(s=>s.id===id);}if(!currentServer)return;
+ currentChannel=null;currentDm=null;renderServerIcons();$("sideTitle").textContent=currentServer.name;$("sideAction").textContent="＋";
+ const {data,error}=await sb.from("channels").select("*").eq("server_id",id).order("created_at");
+ if(error){alert(error.message);return;}channels=data||[];
+ $("sideContent").innerHTML=`<div class="side-section">TEXT CHANNELS</div>${channels.map(c=>`<div class="side-item" data-channel="${c.id}"><span>#</span><span class="name">${esc(c.name)}</span></div>`).join("")}<div class="side-section">SERVER</div><div class="side-item" id="inviteInfo">🔗 <span class="name">Invite / server info</span></div>`;
+ $("sideAction").onclick=()=>createChannelModal();$("sideContent").querySelectorAll("[data-channel]").forEach(el=>el.onclick=()=>openChannel(el.dataset.channel));$("inviteInfo").onclick=serverInfo;
+ $("roomIcon").textContent="#";$("roomTitle").textContent=currentServer.name;$("composerWrap").classList.add("hidden");$("chat").innerHTML='<div class="welcome"><div><h2>'+esc(currentServer.name)+'</h2><p>Choose a channel to start chatting.</p></div></div>';
+ $("sidebar").classList.remove("open");
+}
+async function openChannel(id){
+ currentChannel=channels.find(c=>c.id===id);if(!currentChannel)return;currentDm=null;$("roomIcon").textContent="#";$("roomTitle").textContent=currentChannel.name;$("composerWrap").classList.remove("hidden");$("messageInput").placeholder="Message #"+currentChannel.name;
+ $("chat").innerHTML="";await loadMessages();subscribeMessages();
+ $("sidebar").classList.remove("open");
+}
+async function loadMessages(){
+ if(!currentChannel)return;
+ const {data,error}=await sb.from("messages").select("id,content,image_url,created_at,user_id,profiles(username)").eq("channel_id",currentChannel.id).order("created_at",{ascending:true}).limit(100);
+ if(error){$("chat").textContent=error.message;return;}
+ $("chat").innerHTML="";(data||[]).forEach(renderMessage);$("chat").scrollTop=$("chat").scrollHeight;
+}
+function renderMessage(m){
+ const username=m.profiles?.username||"User";const time=new Date(m.created_at).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
+ const node=document.createElement("div");node.className="msg";node.innerHTML=`<div class="avatar">${esc(initials(username))}</div><div style="min-width:0"><div class="msg-head"><span class="msg-user">${esc(username)}</span><span class="msg-time">${time}</span></div><div class="msg-text">${esc(m.content||"")}</div>${m.image_url?`<a href="${esc(m.image_url)}" target="_blank" rel="noopener"><img class="msg-image" src="${esc(m.image_url)}" alt="Shared image"></a>`:""}</div>`;
+ $("chat").appendChild(node);
+}
+function subscribeMessages(){
+ if(messagesChannel){sb.removeChannel(messagesChannel);messagesChannel=null;}
+ messagesChannel=sb.channel("channel-"+currentChannel.id).on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"channel_id=eq."+currentChannel.id},async payload=>{
+  if(payload.new.user_id===user.id)return;
+  const {data}=await sb.from("messages").select("id,content,image_url,created_at,user_id,profiles(username)").eq("id",payload.new.id).single();
+  if(data){renderMessage(data);$("chat").scrollTop=$("chat").scrollHeight;}
+ }).subscribe();
+}
+$("messageForm").onsubmit=async e=>{
+ e.preventDefault();if(!currentChannel)return;const content=$("messageInput").value.trim();if(!content&&!selectedImage)return;
+ let image_url=null;
+ try{
+  if(selectedImage){const ext=(selectedImage.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");const path=`${user.id}/${crypto.randomUUID()}.${ext}`;
+   const {error}=await sb.storage.from("chat-images").upload(path,selectedImage,{upsert:false,contentType:selectedImage.type});if(error)throw error;
+   const {data}=sb.storage.from("chat-images").getPublicUrl(path);image_url=data.publicUrl;
+  }
+  const {error}=await sb.from("messages").insert({channel_id:currentChannel.id,user_id:user.id,content,image_url});if(error)throw error;
+  $("messageInput").value="";selectedImage=null;$("imageInput").value="";say("attachmentPreview","");
+  const {data}=await sb.from("messages").select("id,content,image_url,created_at,user_id,profiles(username)").eq("channel_id",currentChannel.id).order("created_at",{ascending:false}).limit(1).single();if(data){renderMessage(data);$("chat").scrollTop=$("chat").scrollHeight;}
+ }catch(err){alert("Could not send: "+err.message);}
+};
+$("imageInput").onchange=e=>{selectedImage=e.target.files[0]||null;say("attachmentPreview",selectedImage?`Attached: ${selectedImage.name} (${Math.round(selectedImage.size/1024)} KB)`:"");};
+function createServerModal(){modal("Create a server",`<input id="newServerName" placeholder="Server name" maxlength="40"><input id="newServerDesc" placeholder="Description (optional)" maxlength="160"><label class="small muted">Who can join?</label><select id="newServerVisibility" style="padding:11px;background:#1c1d23;color:white;border:1px solid var(--line);border-radius:8px"><option value="public">Public — anyone can join</option><option value="private">Private — invite code required</option></select><button id="createServerGo">Create server</button>`);$("createServerGo").onclick=async()=>{
+ const name=$("newServerName").value.trim();if(!name)return alert("Enter a server name.");
+ const visibility=$("newServerVisibility").value;const code=visibility==="private"?Array.from(crypto.getRandomValues(new Uint8Array(6))).map(n=>"ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[n%32]).join(""):null;
+ const {data,error}=await sb.from("servers").insert({name,description:$("newServerDesc").value.trim(),visibility,owner_id:user.id,invite_code:code}).select().single();if(error)return alert(error.message);
+ const {error:memberErr}=await sb.from("server_members").insert({server_id:data.id,user_id:user.id,role:"owner"});if(memberErr)return alert(memberErr.message);
+ const {error:channelErr}=await sb.from("channels").insert({server_id:data.id,name:"general",created_by:user.id});if(channelErr)return alert(channelErr.message);
+ closeModal();await loadServers();await openServer(data.id);if(code)alert("Private invite code: "+code+"\nShare it only with people you want to invite.");
+ };}
+function createChannelModal(){modal("Create a channel",`<input id="newChannelName" placeholder="channel-name" maxlength="40"><button id="createChannelGo">Create channel</button>`);$("createChannelGo").onclick=async()=>{const name=$("newChannelName").value.trim().toLowerCase().replace(/[^a-z0-9-]/g,"-").replace(/-+/g,"-");if(!name)return alert("Enter a channel name.");const {error}=await sb.from("channels").insert({server_id:currentServer.id,name,created_by:user.id});if(error)return alert(error.message);closeModal();await openServer(currentServer.id);};}
+function serverInfo(){const code=currentServer.invite_code;modal("Server information",`<p class="muted">${esc(currentServer.description||"No description.")}</p><p>Visibility: <b>${esc(currentServer.visibility)}</b></p>${code?`<p>Invite code</p><input id="copyCode" readonly value="${esc(code)}"><button id="copyInvite">Copy invite code</button>`:"<p class='muted'>Anyone can find and join this public server.</p>"}`);if(code)$("copyInvite").onclick=()=>{navigator.clipboard.writeText(code);toast("Invite code copied");};}
+function joinPrivateModal(){modal("Join a private server",`<input id="privateCode" placeholder="Enter invite code" maxlength="20"><button id="joinPrivateGo">Join server</button>`);$("joinPrivateGo").onclick=async()=>{const code=$("privateCode").value.trim().toUpperCase();const {data,error}=await sb.rpc("join_private_server",{p_code:code});if(error)return alert(error.message);closeModal();await loadServers();await openServer(data);};}
+$("discoverBtn").onclick=showDiscover;$("createServerBtn").onclick=createServerModal;$("mobileMenu").onclick=()=>$("sidebar").classList.toggle("open");
+if("serviceWorker" in navigator && location.protocol!=="file:")navigator.serviceWorker.register("./sw.js").catch(()=>{});
+start().catch(err=>{console.error(err);showAuthError(err.message);});
+</script>
+</body>
+</html>
