@@ -1,0 +1,8 @@
+CHATLY CUSTOMIZATION UPGRADE
+
+1. Back up your GitHub repository before replacing anything.
+2. In Supabase Dashboard > SQL Editor, paste and run customization-upgrade.sql. It only adds two profile columns and an avatar bucket/policy; it does not delete existing data.
+3. In GitHub > your Chatly repository, upload the updated index.html and sw.js from this folder, replacing the existing files. Keep your existing schema.sql and all other files. Commit the changes.
+4. Wait for GitHub Pages to redeploy. Close the old Chatly tab on your iPad, reopen the site, and sign in.
+
+New features: text-message bubbles; custom display name and profile picture via the gear next to Sign out; click another person's name in a chat to set a contact nickname. Nicknames are saved locally in that browser/device. Incoming messages will not force-scroll you down if you are reading older messages.
